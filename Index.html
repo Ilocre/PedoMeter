@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonic Pedometer</title>
+    <style>
+        body {
+            margin: 0;
+            background-color: #222;
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #count {
+            font-size: 80px;
+            font-weight: bold;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background: cyan;
+            border: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div>SONIC</div>
+    <div id="count">0</div>
+    <button onclick="requestPermission()">Enable Sensors</button>
+
+    <script>
+        let pedoCount = 0;
+        const countDisplay = document.getElementById('count');
+
+        function requestPermission() {
+            if (typeof DeviceMotionEvent.requestPermission === 'function') {
+                DeviceMotionEvent.requestPermission()
+                    .then(response => {
+                        if (response === 'granted') {
+                            window.addEventListener('devicemotion', handleMotion);
+                        }
+                    })
+                    .catch(console.error);
+            } else {
+                window.addEventListener('devicemotion', handleMotion);
+            }
+        }
+
+        function handleMotion(event) {
+            const acc = event.accelerationIncludingGravity;
+            if (!acc) return;
+
+            const magnitude = Math.sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
+            
+            // Shake threshold
+            if (magnitude > 20) {
+                pedoCount++;
+                countDisplay.textContent = pedoCount;
+            }
+        }
+    </script>
+</body>
+</html>
