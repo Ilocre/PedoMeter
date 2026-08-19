@@ -62,11 +62,22 @@
             const magnitude = Math.sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
             
             // Shake threshold
-            if (magnitude > 35) {
-                pedoCount++;
-                countDisplay.textContent = pedoCount;
-            }
-        }
-    </script>
-</body>
+let pedoCount = 0;
+let lastShakeTime = 0;
+const countDisplay = document.getElementById('count');
+
+function handleMotion(event) {
+    const acc = event.accelerationIncludingGravity;
+    if (!acc) return;
+
+    const magnitude = Math.sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
+    const currentTime = Date.now();
+    
+    // Shake threshold with a 300ms cooldown
+    if (magnitude > 35 && (currentTime - lastShakeTime) > 300) {
+        pedoCount++;
+        countDisplay.textContent = pedoCount;
+        lastShakeTime = currentTime;
+    }
+}
 </html>
