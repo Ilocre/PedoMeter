@@ -29,7 +29,15 @@
             border: none;
             font-weight: bold;
         }
-   <script>
+    </style>
+</head>
+<body>
+
+    <div>SONIC</div>
+    <div id="count">0</div>
+    <button onclick="requestPermission()">Enable Sensors</button>
+
+    <script>
         let pedoCount = 0;
         let lastShakeTime = 0;
         const countDisplay = document.getElementById('count');
