@@ -3,109 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Check pedo's in your area</title>
+    <title>Sonic Pedometer</title>
     <style>
         body {
             margin: 0;
-            /* Recreating the grey background */
-            background-color: #B0B8C1;
-            color: black;
+            background-color: #7b9ebc;
             font-family: sans-serif;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
-            align-items: center;
             height: 100vh;
             overflow: hidden;
             position: relative;
         }
 
-        /* The checkered pattern overlay */
         .bg-pattern {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 70%; /* Pattern stays behind Sonic */
+            height: 80vh;
             background-image:
-                linear-gradient(45deg, #D1D5D9 25%, transparent 25%),
-                linear-gradient(-45deg, #D1D5D9 25%, transparent 25%),
-                linear-gradient(45deg, transparent 75%, #D1D5D9 75%),
-                linear-gradient(-45deg, transparent 75%, #D1D5D9 75%);
-            background-size: 60px 60px;
-            background-position: 0 0, 0 30px, 30px -30px, -30px 0px;
-            opacity: 0.6;
+                linear-gradient(45deg, #8cb0ce 25%, transparent 25%),
+                linear-gradient(-45deg, #8cb0ce 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #8cb0ce 75%),
+                linear-gradient(-45deg, transparent 75%, #8cb0ce 75%);
+            background-size: 40px 40px;
+            background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
             z-index: -1;
         }
 
-        #sonic-img {
-            position: absolute;
-            /* Positioned to overlap the pattern */
-            top: 5%;
-            left: 5%;
-            width: 90%; /* Adjust size as needed */
-            height: auto;
-            z-index: 1;
-            /* Optional: Add a white outline/glow to separate from background */
-            filter: drop-shadow(0px 0px 4px white) drop-shadow(0px 0px 4px white);
+        .main-content {
+            flex: 1;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
-        /* UI Buttons Container */
+        #sonic-img {
+            max-width: 90%;
+            max-height: 75vh;
+            object-fit: contain;
+            filter: drop-shadow(0px 4px 8px rgba(0,0,0,0.3));
+        }
+
         .ui-buttons {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 15px;
+            right: 15px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
             z-index: 10;
         }
 
         .btn-circle {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: white;
-            border: 3px solid #333;
+            border: 3px solid #222;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
         }
 
         .btn-icon {
-            width: 30px;
-            height: 30px;
+            width: 26px;
+            height: 26px;
             object-fit: contain;
         }
 
-        /* Specific button styles based on image */
-        #btn-reset { border-color: #333; }
-        #btn-stop { background-color: #FF4D4D; border-color: #333; }
-        #btn-map { background-color: #FFD700; border-color: #333; }
+        #btn-stop { background-color: #FF4D4D; }
+        #btn-map { background-color: #FFD700; }
 
-        /* The Black Footer Counter Bar */
         .footer-bar {
             background-color: black;
             color: white;
             width: 100%;
-            height: 20vh; /* Takes up bottom 20% */
+            height: 20vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-top: 5px solid #555; /* Just for styling */
+            border-top: 4px solid #333;
         }
 
         #count {
-            font-size: 100px;
+            font-size: 80px;
             font-weight: bold;
             margin: 0;
-        }
-
-        /* Hide your old enable button */
-        #enable-btn {
-            display: none;
         }
     </style>
 </head>
@@ -113,45 +101,38 @@
 
     <div class="bg-pattern"></div>
 
-    <!-- REPLACED: Insert your specific Sonic image URL here -->
-    <img id="sonic-img" src="sonic.png" alt="Running Sonic">
+    <div class="main-content">
+        <!-- Working Sonic render image link -->
+        <img id="sonic-img" src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/25.png" alt="Sonic">
 
-    <!-- REPLACED: The new UI buttons -->
-    <div class="ui-buttons">
-        <div id="btn-reset" class="btn-circle">
-            <img src="https://img.icons8.com/fluency/48/restart--v1.png" alt="Reset" class="btn-icon">
-        </div>
-        <div id="btn-stop" class="btn-circle">
-            <img src="https://img.icons8.com/fluency/48/stop.png" alt="Stop" class="btn-icon">
-        </div>
-        <div id="btn-map" class="btn-circle">
-            <img src="https://img.icons8.com/fluency/48/map-marker.png" alt="Map" class="btn-icon">
+        <div class="ui-buttons">
+            <div id="btn-reset" class="btn-circle">
+                <img src="https://img.icons8.com/fluency/48/restart--v1.png" alt="Reset" class="btn-icon">
+            </div>
+            <div id="btn-stop" class="btn-circle">
+                <img src="https://img.icons8.com/fluency/48/stop.png" alt="Stop" class="btn-icon">
+            </div>
+            <div id="btn-map" class="btn-circle">
+                <img src="https://img.icons8.com/fluency/48/map-marker.png" alt="Map" class="btn-icon">
+            </div>
         </div>
     </div>
 
-    <!-- The Black Footer -->
     <div class="footer-bar">
         <p id="count">0</p>
     </div>
-
-    <!-- NOTE: The Enable button is still needed to ask permission, but we hide it visually.
-         You must click the screen somewhere to trigger requestPermission() if you don't use the button.
-         For simplicity, I have moved the requestPermission call to a body click event. -->
 
     <script>
         let pedoCount = 0;
         let lastShakeTime = 0;
         const countDisplay = document.getElementById('count');
 
-        // Function to ask for permission
         function requestPermission() {
             if (typeof DeviceMotionEvent.requestPermission === 'function') {
                 DeviceMotionEvent.requestPermission()
                     .then(response => {
                         if (response === 'granted') {
                             window.addEventListener('devicemotion', handleMotion);
-                            // Optional: Provide visual feedback that sensors are active
-                            document.querySelector('.footer-bar').style.borderColor = '#00FF00';
                         }
                     })
                     .catch(console.error);
@@ -160,14 +141,13 @@
             }
         }
 
-        // Handle the motion logic
         function handleMotion(event) {
             const acc = event.accelerationIncludingGravity;
             if (!acc) return;
 
             const magnitude = Math.sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
             const currentTime = Date.now();
-
+            
             if (magnitude > 35 && (currentTime - lastShakeTime) > 300) {
                 pedoCount++;
                 countDisplay.textContent = pedoCount;
@@ -175,9 +155,7 @@
             }
         }
 
-        // Since the button is hidden, click the screen anywhere to start the pedometer
-        document.body.addEventListener('click', requestPermission);
-
+        document.body.addEventListener('click', requestPermission, { once: true });
     </script>
 </body>
 </html>
